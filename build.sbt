@@ -1,4 +1,4 @@
-name := "elasticsearch-java-client-examples"
+name := "learning-elasticsearch"
 
 version := "0.1"
 

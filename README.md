@@ -1,1 +1,1 @@
-# elasticsearch-java-client-examples
+# learning-elasticsearch

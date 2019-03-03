@@ -1,12 +1,8 @@
 package com.techmonad.es
 
-import java.net.InetAddress
-
 import com.techmonad.util.Configuration
-import org.elasticsearch.client.Client
-import org.elasticsearch.common.settings.Settings
-import org.elasticsearch.common.transport.TransportAddress
-import org.elasticsearch.transport.client.PreBuiltTransportClient
+import org.apache.http.HttpHost
+import org.elasticsearch.client.{RestClient, RestHighLevelClient}
 
 import scala.collection.JavaConverters._
 
@@ -16,12 +12,11 @@ trait ESConfig {
 
   lazy val indexName: String = esConfig.getString("catalogue.index")
 
-  lazy val client: Client = {
+  lazy val restClient: RestHighLevelClient = {
     val nodes = esConfig.getStringList("nodes")
     val port = esConfig.getInt("port")
-    val hosts = nodes.asScala.map { host => new TransportAddress(InetAddress.getByName(host), port) }
-    val settings: Settings = Settings.EMPTY // or .builder().put("cluster.name", "myClusterName").build();
-    new PreBuiltTransportClient(settings).addTransportAddresses(hosts: _*)
+    val hosts = nodes.asScala.map { host => new HttpHost(host, port, "http") }
+    new RestHighLevelClient(RestClient.builder(hosts: _*))
   }
 
 

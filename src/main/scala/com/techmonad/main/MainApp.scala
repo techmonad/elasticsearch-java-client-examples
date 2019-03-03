@@ -8,7 +8,7 @@ object MainApp extends App {
 
 
   val catalogueRepo = new CatalogueRepository with ESConfig
-
+  catalogueRepo.ingest()
 
 
 
